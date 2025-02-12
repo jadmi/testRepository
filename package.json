@@ -1,22 +1,5 @@
 {
-  "name": "testrepository",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jadmi/testRepository.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jadmi/testRepository/issues"
-  },
-  "homepage": "https://github.com/jadmi/testRepository#readme",
-  "devDependencies": {
-    "nodemon": "^3.1.9"
+  "dependencies": {
+    "express": "^4.21.2"
   }
 }
