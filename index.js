@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+const data = require("./credentials.json");
+
 // views inladen
 app.set("view engine", "ejs");
 app.set("views", "./views");
@@ -58,6 +60,19 @@ function showAddForm(req, res) {
 }
 
 function handleAddForm(req, res) {
-  res.send(`Formulier ontvangen, dank voor het inloggen met de gegevens:
-    username: ${req.body.username} en password: ${req.body.password}`);
+  // om als strings te weergeven in de response
+  const formUsername = req.body.username;
+  const formPassword = req.body.password;
+
+  // checken of de gegevens overeenkomen van de form data met de userdata al opgeslagen in het json bestand
+  const user = data.users.find(
+    (registeredUser) => registeredUser.username === formUsername
+  );
+  if (user && user.password === formPassword) {
+    res.send(
+      `Welkom, ${formUsername} je wachtwoord kan wel beter dan "${formPassword}"`
+    );
+  } else {
+    res.send("Je hebt nog geen account");
+  }
 }
