@@ -33,3 +33,12 @@ body {
   display: flex;
   margin-top: 1em;
 }
+
+.error {
+  display: flex;
+  font-size: 0.7em;
+  padding: 0em;
+  margin: 0.3em;
+  margin-left: 0em;
+  color: rgb(198, 52, 52);
+}

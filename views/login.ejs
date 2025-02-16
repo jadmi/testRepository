@@ -10,11 +10,14 @@
     <div id="loginContainer">
       <h1>Login</h1>
       <div id="login">
-        <form id="loginForm" action="/inlog" method="POST">
+        <form id="loginForm" action="/welkom" method="POST">
           <label for="username">Username</label>
           <input type="text" id="username" name="username" required />
           <label for="password">Password</label>
           <input type="password" id="password" name="password" required />
+          <% if (error) { %>
+          <p class="error"><%= error %></p>
+          <% } %>
           <button type="submit" id="inlogKnop">Log In</button>
         </form>
       </div>

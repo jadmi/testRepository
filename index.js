@@ -13,7 +13,7 @@ app.use("/static", express.static("static"));
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/inlogweergeven", showAddForm);
-app.post("/inlog", handleAddForm);
+app.post("/welkom", handleAddForm);
 
 // homepage route
 app.get("/", handleHome);
@@ -69,10 +69,8 @@ function handleAddForm(req, res) {
     (registeredUser) => registeredUser.username === formUsername
   );
   if (user && user.password === formPassword) {
-    res.send(
-      `Welkom, ${formUsername} je wachtwoord kan wel beter dan "${formPassword}"`
-    );
+    res.render("welkom.ejs", { username: formUsername });
   } else {
-    res.send("Je hebt nog geen account");
+    res.render("login.ejs", { error: "Incorrect password" });
   }
 }
