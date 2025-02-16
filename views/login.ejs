@@ -16,12 +16,11 @@
           <label for="password">Password</label>
           <input type="password" id="password" name="password" required />
           <% if (error) { %>
-          <p class="error"><%= error %></p>
+          <p class="error" style="color: red"><%= error %></p>
           <% } %>
           <button type="submit" id="inlogKnop">Log In</button>
         </form>
       </div>
     </div>
-    <script src="index.js"></script>
   </body>
 </html>
