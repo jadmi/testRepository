@@ -41,9 +41,9 @@ async function listAllUsers() {
 async function createUser(name, email, password) {
   try {
     const result = await collection.insertOne({ name, email, password });
-    console.log(`✅ Gebruiker toegevoegd met _id: ${result.insertedId}`);
+    console.log(`Gebruiker toegevoegd met _id: ${result.insertedId}`);
   } catch (err) {
-    console.error("❌ Fout bij toevoegen gebruiker:", err);
+    console.error("Fout bij toevoegen gebruiker:", err);
   }
 }
 
