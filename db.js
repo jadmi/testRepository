@@ -24,3 +24,28 @@ client
     console.log(`Database connection error - ${err}`);
     console.log(`For uri - ${uri}`);
   });
+
+// Set up database and collection
+const db = client.db(process.env.DB_NAME);
+const collection = db.collection(process.env.DB_COLLECTION);
+
+async function listAllUsers() {
+  try {
+    const users = await collection.find().toArray();
+    console.log("Gebruikers:", users);
+  } catch (error) {
+    console.error("Fout bij het ophalen van gebruikers:", error);
+  }
+}
+
+async function createUser(name, email, password) {
+  try {
+    const result = await collection.insertOne({ name, email, password });
+    console.log(`✅ Gebruiker toegevoegd met _id: ${result.insertedId}`);
+  } catch (err) {
+    console.error("❌ Fout bij toevoegen gebruiker:", err);
+  }
+}
+
+// Test de functie
+createUser("Justin", "justin@gmail.com", "hashed_password");
