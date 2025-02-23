@@ -47,5 +47,5 @@ async function createUser(name, email, password) {
   }
 }
 
-// Test de functie
-createUser("Justin", "justin@gmail.com", "hashed_password");
+// // Test de functie
+// createUser("Justin", "justin@gmail.com", "hashed_password");
