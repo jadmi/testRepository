@@ -47,5 +47,27 @@ async function createUser(name, email, password) {
   }
 }
 
+// users uit de database vinden
+async function findUsers(req, res) {
+  try{
+    const user = await collection.find().toArray()
+    res.render()
+  } catch (err) {
+  console.error("Fout bij het ophalen van gebruikers:", err);
+}
+}
+
+// enkele user vinden
+async function findUser(username) {
+  try{
+    const user = await collection.findOne({name: username})
+    console.log(user)
+  } catch (err) {
+  console.error("Fout bij het ophalen van gebruikers:", err);
+}
+}
+findUser("Justin")  
+
+
 // // Test de functie
-// createUser("Justin", "justin@gmail.com", "hashed_password");
+// createUser("Justin2", "justin2@gmail.com", "123");
