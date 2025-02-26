@@ -42,17 +42,72 @@ function showAddForm(req, res) {
   res.render("login.ejs");
 }
 
-function handleAddForm(req, res) {
+require("dotenv").config();
+
+// Use MongoDB
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+// Construct URL used to connect to database from info in the .env file
+const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+
+// Create a MongoClient
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
+});
+
+// Try to open a database connection
+client
+  .connect()
+  .then(() => {
+    console.log("Database connection established");
+  })
+  .catch((err) => {
+    console.log(`Database connection error - ${err}`);
+    console.log(`For uri - ${uri}`);
+  });
+
+// Set up database and collection
+const db = client.db(process.env.DB_NAME);
+const collection = db.collection(process.env.DB_COLLECTION);
+
+async function listAllUsers() {
+  try {
+    const users = await collection.find().toArray();
+    console.log("Gebruikers:", users);
+  } catch (error) {
+    console.error("Fout bij het ophalen van gebruikers:", error);
+  }
+}
+
+async function createUser(name, email, password) {
+  try {
+    const result = await collection.insertOne({ name, email, password });
+    console.log(`Gebruiker toegevoegd met _id: ${result.insertedId}`);
+  } catch (err) {
+    console.error("Fout bij toevoegen gebruiker:", err);
+  }
+}
+
+async function handleAddForm(req, res) {
   const formUsername = req.body.username;
   const formPassword = req.body.password;
 
-  const user = data.users.find(
-    (registeredUser) => registeredUser.username === formUsername
-  );
-  if (user && user.password === formPassword) {
-    res.render("welkom.ejs", { username: formUsername });
-  } else {
-    res.render("login.ejs", { error: "Incorrect password" });
+  try {
+    const user = await collection.findOne({ name: formUsername });
+    console.log("User found:", user); // Debugging
+
+    if (user && user.password === formPassword) {
+      console.log("Login successful"); // Debugging
+      res.render("welkom.ejs", { name: formUsername });
+    } else {
+      console.log("Login failed"); // Debugging
+      res.render("login.ejs", { error: "Incorrect password" });
+    }
+  } catch (err) {
+    console.error("Fout bij het ophalen van gebruiker:", err);
   }
 }
 
