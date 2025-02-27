@@ -94,12 +94,13 @@ async function createUser(name, email, password) {
 async function handleAddForm(req, res) {
   const formUsername = req.body.username;
   const formPassword = req.body.password;
+  const formEmail = req.body.email;
 
   try {
     const user = await collection.findOne({ name: formUsername });
     console.log("User found:", user); // Debugging
 
-    if (user && user.password === formPassword) {
+    if (user && user.password === formPassword && user.email === formEmail) {
       console.log("Login successful"); // Debugging
       res.render("welkom.ejs", { name: formUsername });
     } else {
@@ -110,5 +111,35 @@ async function handleAddForm(req, res) {
     console.error("Fout bij het ophalen van gebruiker:", err);
   }
 }
+
+
+// Register weergeven
+router.get("/register", (req, res) => {
+  res.render("register.ejs");
+});
+
+
+async function handleRegister(req, res) {
+  const name = req.body.username;
+  const email = req.body.email;
+  const password = req.body.password;
+
+  try {
+    const nieuweGebruiker = await collection.insertOne({name, email, password})
+    if(nieuweGebruiker) {
+      res.redirect('welkomTwee.ejs')
+      console.log("checkdb")
+    }
+  } catch (err) {
+    console.error("Fout bij het toevoegen van gebruiker:", err);
+  }
+
+}
+
+
+
+router.post("/welkomTwee", handleRegister);
+
+
 
 module.exports = router;
